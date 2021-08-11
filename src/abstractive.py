@@ -15,6 +15,7 @@ import spacy
 import torch
 from rouge_score import rouge_scorer, scoring
 from spacy.lang.en import English
+from spacy.lang.tr import Turkish
 from torch import nn
 from torch.utils.data import DataLoader
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, EncoderDecoderModel
@@ -345,7 +346,7 @@ class AbstractiveSummarizer(pl.LightningModule):
             # already split in the dataset (use `hparams.split_char` to specify the sentence
             # boundary character)
             if not self.hparams.split_char:
-                highlights = tokenize(spacy_nlp, highlights, disable_progress_bar=True)
+                highlights = tokenize(spacy_nlp, highlights, disable_progress_bar=False)
 
             sep_token = self.tokenizer.sep_token
             highlights_input_ids = []
@@ -372,6 +373,7 @@ class AbstractiveSummarizer(pl.LightningModule):
                     sent = self.tokenizer.tokenize(sent)
                     sent.append(sep_token)
                     sents_tokenized.append(sent)
+                    print(sent)
 
                 # Delete the last `sep_token` from the last sentence
                 assert type(sents_tokenized[-1][-1]) is str
@@ -455,7 +457,9 @@ class AbstractiveSummarizer(pl.LightningModule):
                 sentencizer = spacy_nlp.create_pipe("sentencizer")
                 spacy_nlp.add_pipe(sentencizer)
             else:
-                spacy_nlp = spacy.load("en_core_web_sm", disable=["tagger", "ner"])
+                #spacy_nlp = spacy.load("en_core_web_sm", disable=["tagger", "ner"])
+                spacy_nlp = Turkish()
+                spacy_nlp.add_pipe("sentencizer")
 
         # Combine the two sections of `scientific_papers` if it is chosen as the dataset
         if self.hparams.dataset == "scientific_papers":
@@ -519,11 +523,12 @@ class AbstractiveSummarizer(pl.LightningModule):
                 ):
                     self.dataset[split] = nlp.Dataset.from_file(dataset_path)
             else:
-                self.dataset = nlp.load_dataset(
-                    self.hparams.dataset,
-                    self.hparams.dataset_version,
-                    cache_dir=self.hparams.nlp_cache_dir,
-                )
+                #self.dataset = nlp.load_dataset(
+                #    self.hparams.dataset,
+                #    self.hparams.dataset_version,
+                #    cache_dir=self.hparams.nlp_cache_dir,
+                #)
+                self.dataset = nlp.load_dataset("mlsum","tu")
 
         for split, features_cache_file in self.tokenized_data_file_paths.items():
             # If the tokenized version has not been created yet, then do the initial
@@ -671,7 +676,7 @@ class AbstractiveSummarizer(pl.LightningModule):
 
     def calculate_loss(self, prediction_scores, labels):
         masked_lm_loss = self.loss_func(
-            prediction_scores.view(-1, self.model.config.vocab_size), labels.view(-1)
+            prediction_scores.view(-1, self.model.config.decoder.vocab_size), labels.view(-1)
         )
         return masked_lm_loss
 
