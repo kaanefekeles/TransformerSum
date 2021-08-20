@@ -1,0 +1,15 @@
+pytorch
+scikit-learn
+tensorboard
+spacy
+sphinx
+pyarrow
+pre-commit
+pytorch_lightning
+transformers
+torch_optimizer
+wandb
+rouge-score
+packaging
+datasets
+gradio
