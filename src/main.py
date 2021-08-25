@@ -82,11 +82,11 @@ def main(args):
     lr_logger = LearningRateMonitor()
     args.callbacks = [lr_logger]
 
-    if args.use_logger == "wandb":
-        wandb_logger = WandbLogger(
-            project=args.wandb_project, log_model=(not args.no_wandb_logger_log_model)
-        )
-        args.logger = wandb_logger
+    #if args.use_logger == "wandb":
+        #wandb_logger = WandbLogger(
+        #    project=args.wandb_project, log_model=(not args.no_wandb_logger_log_model)
+        #)
+        #args.logger = wandb_logger
 
     if args.use_custom_checkpoint_callback:
         args.checkpoint_callback = ModelCheckpoint(
