@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 
 WORKDIR /TransformerSum/src/
 
-RUN python3 main.py --mode abstractive --model_name_or_path dbmdz/bert-base-turkish-uncased --decoder_model_name_or_path dbmdz/bert-base-turkish-uncased --cache_file_path data --max_epochs 4  --do_train --do_test  --batch_size 4  --weights_save_path model_weights --no_wandb_logger_log_model --accumulate_grad_batches 5 --use_scheduler linear --warmup_steps 8000 --gradient_clip_val 1.0 --custom_checkpoint_every_n 300 --data_example_column text --data_summarized_column summary --gpus 0
+RUN python3 main.py --mode abstractive --model_name_or_path dbmdz/bert-base-turkish-uncased --decoder_model_name_or_path dbmdz/bert-base-turkish-uncased --cache_file_path data --max_epochs 4  --do_train --do_test  --batch_size 4  --weights_save_path model_weights --no_wandb_logger_log_model --accumulate_grad_batches 5 --use_scheduler linear --warmup_steps 8000 --gradient_clip_val 1.0 --custom_checkpoint_every_n 300 --data_example_column text --data_summarized_column summary --gpus -1
