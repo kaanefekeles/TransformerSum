@@ -1,0 +1,2 @@
+Building: docker build -t tsum:1.0 .
+Running: docker run --rm -v tsumCheckpoints:/TransformerSum/src/model_weights tsum:1.0
