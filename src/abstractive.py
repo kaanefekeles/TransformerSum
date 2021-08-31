@@ -373,7 +373,6 @@ class AbstractiveSummarizer(pl.LightningModule):
                     sent = self.tokenizer.tokenize(sent)
                     sent.append(sep_token)
                     sents_tokenized.append(sent)
-                    print(sent)
 
                 # Delete the last `sep_token` from the last sentence
                 assert type(sents_tokenized[-1][-1]) is str
