@@ -93,3 +93,9 @@ Questions? Commends? Issues? Don't hesitate to open an [issue](https://github.co
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
+
+
+## Docker
+
+Building: docker build -t tsum:1.0 .
+Running: docker run --gpus all --rm -v tsumCheckpoints:/TransformerSum/src/model_weights tsum:1.0
