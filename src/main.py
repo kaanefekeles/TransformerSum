@@ -13,7 +13,7 @@ from pytorch_lightning.plugins import DeepSpeedPlugin
 
 import datasets as nlp
 from abstractive import AbstractiveSummarizer
-from extractive import ExtractiveSummarizer
+#from extractive import ExtractiveSummarizer
 from helpers import StepCheckpointCallback
 
 logger = logging.getLogger(__name__)
@@ -39,8 +39,8 @@ def main(args):
 
     if args.mode == "abstractive":
         summarizer = AbstractiveSummarizer
-    else:
-        summarizer = ExtractiveSummarizer
+    #else:
+    #    summarizer = ExtractiveSummarizer
 
     if args.load_weights:
         model = summarizer(hparams=args)
@@ -454,8 +454,8 @@ if __name__ == "__main__":
 
     if main_args[0].mode == "abstractive":
         parser = AbstractiveSummarizer.add_model_specific_args(parser)
-    else:
-        parser = ExtractiveSummarizer.add_model_specific_args(parser)
+    #else:
+    #    parser = ExtractiveSummarizer.add_model_specific_args(parser)
 
     if main_args[0].custom_checkpoint_every_n and (not main_args[0].weights_save_path):
         logger.error(
