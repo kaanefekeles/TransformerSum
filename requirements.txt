@@ -8,7 +8,6 @@ pre-commit
 pytorch_lightning
 transformers
 torch_optimizer
-wandb
 rouge-score
 packaging
 datasets
