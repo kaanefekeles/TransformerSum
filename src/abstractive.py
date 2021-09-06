@@ -458,8 +458,7 @@ class AbstractiveSummarizer(pl.LightningModule):
             else:
                 #spacy_nlp = spacy.load("en_core_web_sm", disable=["tagger", "ner"])
                 spacy_nlp = Turkish()
-                sentencizer = spacy_nlp.create_pipe("sentencizer")
-                spacy_nlp.add_pipe(sentencizer)
+                spacy_nlp.add_pipe("sentencizer")
 
         # Combine the two sections of `scientific_papers` if it is chosen as the dataset
         if self.hparams.dataset == "scientific_papers":
